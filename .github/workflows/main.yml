@@ -30,7 +30,7 @@ jobs:
             }
         }
         dependencyResolutionManagement {
-            repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+            repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
             repositories {
                 google()
                 mavenCentral()
@@ -44,6 +44,13 @@ jobs:
             id 'com.android.application' version '8.1.4' apply false
             id 'com.android.library' version '8.1.4' apply false
             id 'org.jetbrains.kotlin.android' version '1.8.22' apply false
+        }
+        allprojects {
+            repositories {
+                google()
+                mavenCentral()
+                maven { url 'https://jitpack.io' }
+            }
         }
         EOF
         cat << 'EOF' > gradle.properties
