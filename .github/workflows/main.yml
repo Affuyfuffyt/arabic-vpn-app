@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Auto-Fix Empty Root Files & Inject JitPack
+    - name: Auto-Fix Empty Root Files
       run: |
         cat << 'EOF' > settings.gradle
         pluginManagement {
@@ -45,13 +45,18 @@ jobs:
             id 'com.android.library' version '8.1.4' apply false
             id 'org.jetbrains.kotlin.android' version '1.8.22' apply false
         }
+        allprojects {
+            repositories {
+                google()
+                mavenCentral()
+                maven { url 'https://jitpack.io' }
+            }
+        }
         EOF
         cat << 'EOF' > gradle.properties
         android.useAndroidX=true
         android.enableJetifier=true
         EOF
-        echo "" >> app/build.gradle
-        echo "repositories { maven { url 'https://jitpack.io' } }" >> app/build.gradle
 
     - name: Setup Gradle 8.4
       uses: gradle/actions/setup-gradle@v3
