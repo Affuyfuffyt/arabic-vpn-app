@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Auto-Fix Files & Version Typo
+    - name: Smart Fix & Auto-Find Working VPN Library
       run: |
         cat << 'EOF' > settings.gradle
         pluginManagement {
@@ -47,14 +47,28 @@ jobs:
             repositories {
                 google()
                 mavenCentral()
-                jcenter()
                 maven { url 'https://jitpack.io' }
             }
         }
         EOF
         
-        # هذا السطر سيبحث عن الإصدار الخاطئ ويصلحه تلقائياً
-        find . -type f -name "build.gradle" -exec sed -i 's/v0.7.64/0.7.64/g' {} +
+        echo "Searching JitPack for a working OpenVPN version..."
+        SUCCESS=0
+        for user in "schwabe" "arneschwabe"; do
+          for version in "0.7.64" "0.7.63" "0.7.62" "0.7.60" "0.7.50" "master-SNAPSHOT"; do
+            echo "Testing $user:$version..."
+            status=$(curl -s -o /dev/null -w "%{http_code}" "https://jitpack.io/com/github/$user/ics-openvpn/$version/ics-openvpn-$version.pom")
+            if [ "$status" = "200" ]; then
+              echo "✅ Success! Found working version: $version"
+              find . -type f -name "build.gradle" -exec sed -i "s/ics-openvpn:0.7.64/ics-openvpn:$version/g" {} +
+              find . -type f -name "build.gradle" -exec sed -i "s/ics-openvpn:v0.7.64/ics-openvpn:$version/g" {} +
+              find . -type f -name "build.gradle" -exec sed -i "s/com.github.schwabe/com.github.$user/g" {} +
+              SUCCESS=1
+              break
+            fi
+          done
+          if [ "$SUCCESS" = "1" ]; then break; fi
+        done
 
     - name: Setup Gradle 8.4
       uses: gradle/actions/setup-gradle@v3
@@ -62,7 +76,7 @@ jobs:
         gradle-version: '8.4'
 
     - name: Build Debug APK
-      run: gradle assembleDebug --init-script init.gradle
+      run: gradle assembleDebug --init-script init.gradle --info
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
