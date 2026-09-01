@@ -46,6 +46,10 @@ jobs:
             id 'org.jetbrains.kotlin.android' version '1.8.22' apply false
         }
         EOF
+        cat << 'EOF' > gradle.properties
+        android.useAndroidX=true
+        android.enableJetifier=true
+        EOF
 
     - name: Setup Gradle 8.4
       uses: gradle/actions/setup-gradle@v3
