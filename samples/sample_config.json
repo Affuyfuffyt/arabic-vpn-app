@@ -1,0 +1,9 @@
+{
+  "name": "الخادم التجريبي",
+  "server": "vpn.example.com",
+  "port": 1194,
+  "protocol": "udp",
+  "username": "your_username",
+  "password": "your_password",
+  "ovpn_config": "client\ndev tun\nproto udp\nremote vpn.example.com 1194\nresolv-retry infinite\nnobind\npersist-key\npersist-tun\ncipher AES-256-CBC\nauth SHA256\nverb 3\nauth-user-pass\n<ca>\n-----BEGIN CERTIFICATE-----\nMIIDQzCCAisCFSxxx...\n-----END CERTIFICATE-----\n</ca>\n<cert>\n-----BEGIN CERTIFICATE-----\nMIIDQzCCAisCFSxxx...\n-----END CERTIFICATE-----\n</cert>\n<key>\n-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBxxx...\n-----END PRIVATE KEY-----\n</key>"
+}
