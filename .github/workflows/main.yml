@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Auto-Fix Empty Root Files
+    - name: Auto-Fix Empty Root Files & Inject Init Script
       run: |
         cat << 'EOF' > settings.gradle
         pluginManagement {
@@ -27,14 +27,6 @@ jobs:
                 google()
                 mavenCentral()
                 gradlePluginPortal()
-            }
-        }
-        dependencyResolutionManagement {
-            repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
-            repositories {
-                google()
-                mavenCentral()
-                maven { url 'https://jitpack.io' }
             }
         }
         include ':app'
@@ -57,6 +49,13 @@ jobs:
         android.useAndroidX=true
         android.enableJetifier=true
         EOF
+        cat << 'EOF' > init.gradle
+        allprojects {
+            repositories {
+                maven { url 'https://jitpack.io' }
+            }
+        }
+        EOF
 
     - name: Setup Gradle 8.4
       uses: gradle/actions/setup-gradle@v3
@@ -64,7 +63,7 @@ jobs:
         gradle-version: '8.4'
 
     - name: Build Debug APK
-      run: gradle assembleDebug
+      run: gradle assembleDebug --init-script init.gradle
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
