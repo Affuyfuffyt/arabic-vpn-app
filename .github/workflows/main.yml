@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Auto-Fix Empty Root Files & Inject Init Script
+    - name: Auto-Fix Files & Version Typo
       run: |
         cat << 'EOF' > settings.gradle
         pluginManagement {
@@ -37,13 +37,6 @@ jobs:
             id 'com.android.library' version '8.1.4' apply false
             id 'org.jetbrains.kotlin.android' version '1.8.22' apply false
         }
-        allprojects {
-            repositories {
-                google()
-                mavenCentral()
-                maven { url 'https://jitpack.io' }
-            }
-        }
         EOF
         cat << 'EOF' > gradle.properties
         android.useAndroidX=true
@@ -52,10 +45,16 @@ jobs:
         cat << 'EOF' > init.gradle
         allprojects {
             repositories {
+                google()
+                mavenCentral()
+                jcenter()
                 maven { url 'https://jitpack.io' }
             }
         }
         EOF
+        
+        # هذا السطر سيبحث عن الإصدار الخاطئ ويصلحه تلقائياً
+        find . -type f -name "build.gradle" -exec sed -i 's/v0.7.64/0.7.64/g' {} +
 
     - name: Setup Gradle 8.4
       uses: gradle/actions/setup-gradle@v3
