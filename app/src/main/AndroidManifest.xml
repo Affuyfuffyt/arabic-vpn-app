@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- VPN permission — required to establish a VPN tunnel -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Query ics-openvpn package (Android 11+ package visibility) -->
+    <queries>
+        <package android:name="de.blinkt.openvpn" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ArabicVPN"
+        android:hardwareAccelerated="true"
+        tools:targetApi="34">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            ics-openvpn OpenVPNService — declared here so the VPN engine
+            runs inside THIS app's process. The service is exported=false
+            because only our own app needs to start it.
+        -->
+        <service
+            android:name="de.blinkt.openvpn.core.OpenVPNService"
+            android:exported="false"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:foregroundServiceType="specialUse">
+            <intent-filter>
+                <action android:name="de.blinkt.openvpn.START_SERVICE" />
+                <action android:name="de.blinkt.openvpn.DISCONNECT_VPN" />
+            </intent-filter>
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="VPN tunnel service" />
+        </service>
+
+        <!-- ics-openvpn API service for remote control (optional) -->
+        <service
+            android:name="de.blinkt.openvpn.api.ExternalOpenVPNService"
+            android:exported="false" />
+
+        <!-- ics-openvpn permission grant activity -->
+        <activity
+            android:name="de.blinkt.openvpn.api.GrantPermissionsActivity"
+            android:exported="false" />
+
+        <!-- ics-openvpn launch activity (handles VpnService.prepare) -->
+        <activity
+            android:name="de.blinkt.openvpn.LaunchVPN"
+            android:exported="false"
+            android:theme="@style/Theme.ArabicVPN" />
+
+        <!-- ics-openvpn disconnect activity -->
+        <activity
+            android:name="de.blinkt.openvpn.activities.DisconnectVPN"
+            android:exported="false"
+            android:theme="@style/Theme.ArabicVPN" />
+
+    </application>
+
+</manifest>

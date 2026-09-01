@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- اسم التطبيق -->
+    <string name="app_name">VPN العربي</string>
+
+    <!-- العناوين -->
+    <string name="title_status">حالة الاتصال</string>
+    <string name="title_config">الإعداد الحالي</string>
+    <string name="title_log">سجل الأخطاء والأحداث</string>
+    <string name="title_actions">التحكم</string>
+
+    <!-- الحالات -->
+    <string name="status_idle">غير متصل</string>
+    <string name="status_connecting">جاري الاتصال…</string>
+    <string name="status_connected">متصل</string>
+    <string name="status_disconnecting">جاري القطع…</string>
+    <string name="status_error">خطأ في الاتصال</string>
+
+    <!-- الأزرار -->
+    <string name="btn_import">استيراد إعداد</string>
+    <string name="btn_connect">اتصال</string>
+    <string name="btn_disconnect">قطع الاتصال</string>
+    <string name="btn_copy_log">نسخ السجل</string>
+    <string name="btn_clear_log">مسح السجل</string>
+
+    <!-- تسميات الحالة -->
+    <string name="label_status">الحالة:</string>
+    <string name="label_server">الخادم:</string>
+    <string name="label_message">التفاصيل:</string>
+    <string name="label_log_count">عدد الأحداث: 0</string>
+    <string name="label_no_config">لا يوجد إعداد محمّل — استورد ملف JSON</string>
+
+    <!-- رسائل -->
+    <string name="msg_import_first">استورد إعداد JSON أولًا</string>
+    <string name="msg_log_copied">تم نسخ السجل</string>
+    <string name="msg_import_failed">فشل استيراد الملف</string>
+
+    <!-- وصف السجل -->
+    <string name="log_empty">السجل فارغ — لا توجد أحدات بعد</string>
+</resources>

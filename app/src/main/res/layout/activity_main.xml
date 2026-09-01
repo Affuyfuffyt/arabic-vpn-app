@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:background="@color/bg_primary"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- ════════════════ العنوان ════════════════ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- ════════════════ بطاقة الحالة ════════════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_status"
+                    style="@style/TextAppearance.ArabicVPN.Label"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- مؤشر الحالة + قيمة الحالة -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <View
+                        android:id="@+id/status_indicator"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:background="@color/status_idle"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_status_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status_idle"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/status_idle" />
+                </LinearLayout>
+
+                <!-- الخادم -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="4dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_server"
+                        style="@style/TextAppearance.ArabicVPN.Label"
+                        android:layout_marginEnd="8dp" />
+                    <TextView
+                        android:id="@+id/tv_server_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        style="@style/TextAppearance.ArabicVPN.Value" />
+                </LinearLayout>
+
+                <!-- الرسالة / جاي يحاول -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_message"
+                        style="@style/TextAppearance.ArabicVPN.Label"
+                        android:layout_marginEnd="8dp" />
+                    <TextView
+                        android:id="@+id/tv_status_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        style="@style/TextAppearance.ArabicVPN.Value"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ════════════════ بطاقة الإعداد ════════════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_config"
+                    style="@style/TextAppearance.ArabicVPN.Label"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_config_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_no_config"
+                    style="@style/TextAppearance.ArabicVPN.Value"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_config_server"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.ArabicVPN.Label"
+                    android:visibility="gone"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ════════════════ أزرار التحكم ════════════════ -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_import"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/btn_import"
+            style="@style/Widget.ArabicVPN.Button.Outlined"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_connect"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/btn_connect"
+                style="@style/Widget.ArabicVPN.Button"
+                android:layout_marginEnd="6dp"
+                android:enabled="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_disconnect"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/btn_disconnect"
+                style="@style/Widget.ArabicVPN.Button.Outlined"
+                android:layout_marginStart="6dp"
+                android:enabled="false" />
+        </LinearLayout>
+
+        <!-- ════════════════ عنوان السجل + أزرار النسخ/المسح ════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/title_log"
+                style="@style/TextAppearance.ArabicVPN.Title"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_log_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_log_count"
+                style="@style/TextAppearance.ArabicVPN.Label"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_copy_log"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/btn_copy_log"
+                android:textSize="12sp"
+                style="@style/Widget.ArabicVPN.Button.Outlined"
+                android:minWidth="0dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:layout_marginEnd="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_clear_log"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/btn_clear_log"
+                android:textSize="12sp"
+                style="@style/Widget.ArabicVPN.Button.Outlined"
+                android:minWidth="0dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
+        </LinearLayout>
+
+        <!-- ════════════════ قائمة السجل ════════════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/log_bg"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="1dp"
+            android:layout_marginBottom="16dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_log"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:minHeight="200dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

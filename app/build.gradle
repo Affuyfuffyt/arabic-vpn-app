@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.arabicvpn.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.arabicvpn.app"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    packaging {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt',
+                         'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt',
+                         'META-INF/notice.txt', 'META-INF/ASL2.0']
+        }
+    }
+}
+
+dependencies {
+    // AndroidX core
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    implementation 'androidx.activity:activity-ktx:1.8.2'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+
+    // JSON parsing
+    implementation 'org.json:json:20240303'
+
+    // ──────────────────────────────────────────────────────────────
+    // ics-openvpn — OpenVPN engine for Android.
+    // NOT on Maven Central. Built from source via JitPack.
+    //
+    // JitPack clones github.com/schwabe/ics-openvpn at the tagged
+    // release and builds the :main module as an AAR. The build
+    // requires the Android NDK (native OpenVPN core). If JitPack
+    // fails to build the native layer, see README.md → "Alternative
+    // embedding methods" for the git-submodule approach.
+    // ──────────────────────────────────────────────────────────────
+    implementation 'com.github.schwabe:ics-openvpn:v0.7.64'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
